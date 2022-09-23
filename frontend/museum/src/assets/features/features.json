@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Hall of Fame",
+    "link": "halloffame",
+    "icon": "account_balance"
+  },
+  {
+    "name": "Leaderboard",
+    "link": "leaderboard",
+    "icon": "list_alt"
+  },
+  {
+    "name": "Artist",
+    "link": "artist",
+    "icon": "person"
+  }
+]
