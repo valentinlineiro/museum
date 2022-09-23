@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
+  items: Array<number> = new Array<number>(1000);
+
   constructor() {}
 
   ngOnInit(): void {}

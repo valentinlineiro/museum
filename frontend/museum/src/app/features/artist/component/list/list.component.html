@@ -1,8 +1,8 @@
 <div fxFlexFill fxLayout="column">
   <app-list-toolbar title="Artist"></app-list-toolbar>
-  <div fxFlex>
+  <div fxFlex class="container">
     <mat-list>
-      <mat-list-item>
+      <mat-list-item *ngFor="let item of items">
         <img
           matListAvatar
           src="https://es.openfoodfacts.org/images/products/40111445/front_es.123.full.jpg"
