@@ -1,1 +1,27 @@
-<p>list works!</p>
+<div fxFlexFill fxLayout="column">
+  <app-list-toolbar title="Artist"></app-list-toolbar>
+  <div fxFlex>
+    <mat-list>
+      <mat-list-item>
+        <img
+          matListAvatar
+          src="https://es.openfoodfacts.org/images/products/40111445/front_es.123.full.jpg"
+        />
+        <h3 matLine>PESTE</h3>
+        <p matLine>
+          <span>Pestilente a tope</span>
+        </p>
+        <button mat-icon-button [matMenuTriggerFor]="itemMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
+<app-fab routerLink="create"></app-fab>
+<mat-menu #itemMenu="matMenu">
+  <button mat-menu-item>Option 1</button>
+  <button mat-menu-item>Option 2</button>
+  <button mat-menu-item>Option 3</button>
+</mat-menu>

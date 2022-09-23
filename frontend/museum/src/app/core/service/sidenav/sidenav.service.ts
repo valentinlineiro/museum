@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CoreModule } from '../../core.module';
 
 @Injectable({
-  providedIn: CoreModule,
+  providedIn: 'root',
 })
 export class SidenavService {
   private toggle$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
