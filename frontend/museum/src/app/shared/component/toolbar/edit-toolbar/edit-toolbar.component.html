@@ -1,0 +1,11 @@
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="start center">
+  <button mat-icon-button (click)="onExit()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>{{ title }}</span>
+  <span fxFlex></span>
+  <!-- TODO: Improve the color of the button when is disabled -->
+  <button mat-icon-button (click)="onSave()" [disabled]="disabled">
+    <mat-icon>save_alt</mat-icon>
+  </button>
+</mat-toolbar>
