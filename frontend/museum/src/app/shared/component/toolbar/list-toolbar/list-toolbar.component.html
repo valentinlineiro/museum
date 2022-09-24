@@ -1,6 +1,11 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="start center">
   <button mat-icon-button (click)="onMenu()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>{{ title }}</span>
+  <span fxFlex></span>
+  <!-- TODO: Improve the color of the button when is disabled -->
+  <button mat-icon-button>
+    <mat-icon>search</mat-icon>
+  </button>
 </mat-toolbar>
