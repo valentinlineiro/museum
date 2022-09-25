@@ -1,8 +1,8 @@
-// install express with `npm install express` 
-const express = require('express')
-const app = express()
+const app = require('./app/app')
 
-app.get('/', async (req, res) => res.send('Hello World!'))
+if (require.main === module) {
+  const PORT = 3000
+  app.listen(PORT, () => console.log(`Artist micro listening on port ${PORT}`))
+}
 
-// export 'app'
 module.exports = app
