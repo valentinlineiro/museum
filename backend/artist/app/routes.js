@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
       id: uuid(),
       name,
       bio,
-      tags,
+      tags: tags || [],
     })
   }
 })
