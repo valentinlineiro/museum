@@ -7,12 +7,18 @@ router.get('/', async (req, res) => res.send('Hello World!'))
 
 router.post('/', async (req, res) => {
   const { name, bio, tags } = req.body
-  res.status(201).json({
-    id: uuid(),
-    name,
-    bio,
-    tags,
-  })
+  if (!name) {
+    res.status(400).json({
+      message: 'Mandatory field name is missing',
+    })
+  } else {
+    res.status(201).json({
+      id: uuid(),
+      name,
+      bio,
+      tags,
+    })
+  }
 })
 
 module.exports.router = router
