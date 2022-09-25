@@ -1,11 +1,12 @@
-const request = require('supertest')
-const app = require('../app/app')
+import { describe, expect, it } from '@jest/globals';
+import request from 'supertest';
+import { app } from '../src/app';
 
 describe('POST / test suite', () => {
   shouldSucceedCreatingArtistWithRequiredFields(),
     shouldSucceedCreatingArtistWithAllFields(),
-    shouldFailCreatingArtistWithBadRequestWhenNameIsMissing()
-})
+    shouldFailCreatingArtistWithBadRequestWhenNameIsMissing();
+});
 
 function shouldSucceedCreatingArtistWithRequiredFields() {
   return it('should create a new artist with required fields', async () => {
@@ -15,14 +16,14 @@ function shouldSucceedCreatingArtistWithRequiredFields() {
         name: 'Mr. Miyagi',
       },
       201
-    )
+    );
 
     expect(response.body).toEqual({
       id: expect.any(String),
       name: 'Mr. Miyagi',
       tags: [],
-    })
-  })
+    });
+  });
 }
 
 function shouldSucceedCreatingArtistWithAllFields() {
@@ -36,15 +37,15 @@ function shouldSucceedCreatingArtistWithAllFields() {
       })
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(201)
+      .expect(201);
 
     expect(response.body).toEqual({
       id: expect.any(String),
       name: 'Mr. Miyagi',
       bio: 'Mr. Miyagi is a complex artist',
       tags: ['japanese', 'old'],
-    })
-  })
+    });
+  });
 }
 
 function shouldFailCreatingArtistWithBadRequestWhenNameIsMissing() {
@@ -56,14 +57,14 @@ function shouldFailCreatingArtistWithBadRequestWhenNameIsMissing() {
         tags: ['tag'],
       },
       400
-    )
+    );
 
     expect(response.body).toEqual({
       status: 400,
       message: 'Missing mandatory field name',
       stack: expect.any(Object),
-    })
-  })
+    });
+  });
 }
 
 function requestToApi(endpoint, body, status) {
@@ -72,5 +73,5 @@ function requestToApi(endpoint, body, status) {
     .send(body)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
-    .expect(status)
+    .expect(status);
 }
