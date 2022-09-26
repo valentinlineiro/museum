@@ -8,30 +8,17 @@ import { app } from '../src/app';
 const deta = Deta(process.env.PROJECT_KEY);
 const db = deta.Base(process.env.TEST_DB_NAME as string);
 
-describe('POST / test suite', () => {
-  shouldSucceedCreatingArtistWithRequiredFields(),
-    shouldSucceedCreatingArtistWithAllFields(),
-    shouldFailCreatingArtistWithBadRequestWhenNameIsMissing();
+describe('GET / test suite', () => {
+  shouldSucceedListingArtistsWhenThereAreNone();
 });
 
-function shouldSucceedCreatingArtistWithRequiredFields() {
-  return it('should create a new artist with required fields', async () => {
-    const response = await requestToApi(
-      '/',
-      {
-        name: 'Mr. Miyagi',
-      },
-      201
-    );
+function shouldSucceedListingArtistsWhenThereAreNone() {
+  return it('should list no artists', async () => {
+    const response = await requestToApi('/', 200);
     expect(response.body).toEqual({
-      id: expect.any(String),
-      created: expect.any(Number),
-      resource: {
-        name: 'Mr. Miyagi',
-        tags: [],
-      },
+      items: [],
+      count: 0,
     });
-    await clean(response.body.id);
   });
 }
 
@@ -62,14 +49,7 @@ function shouldSucceedCreatingArtistWithAllFields() {
 
 function shouldFailCreatingArtistWithBadRequestWhenNameIsMissing() {
   return it('should return 400 when name is missing', async () => {
-    const response = await requestToApi(
-      '/',
-      {
-        bio: 'Bio...',
-        tags: ['tag'],
-      },
-      400
-    );
+    const response = await requestToApi('/', 200);
     expect(response.body).toEqual({
       status: 400,
       message: 'Missing mandatory field name',
@@ -78,10 +58,9 @@ function shouldFailCreatingArtistWithBadRequestWhenNameIsMissing() {
   });
 }
 
-function requestToApi(endpoint, body, status) {
+function requestToApi(endpoint, status) {
   return request(app)
-    .post(endpoint)
-    .send(body)
+    .get(endpoint)
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(status);
