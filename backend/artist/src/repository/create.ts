@@ -23,9 +23,11 @@ export class CreateRepository {
       name: artist.name,
       bio: artist.bio,
       tags: artist.tags || [],
+      created: Date.now(),
     });
     return {
       id: createdArtist.key,
+      created: createdArtist.created,
       resource: {
         name: createdArtist.name,
         bio: createdArtist.bio,

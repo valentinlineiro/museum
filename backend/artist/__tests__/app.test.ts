@@ -23,6 +23,7 @@ function shouldSucceedCreatingArtistWithRequiredFields() {
     );
     expect(response.body).toEqual({
       id: expect.any(String),
+      created: expect.any(Number),
       resource: {
         name: 'Mr. Miyagi',
         tags: [],
@@ -46,6 +47,7 @@ function shouldSucceedCreatingArtistWithAllFields() {
       .expect(201);
     expect(response.body).toEqual({
       id: expect.any(String),
+      created: expect.any(Number),
       resource: {
         name: 'Mr. Miyagi',
         bio: 'Mr. Miyagi is a complex artist',
