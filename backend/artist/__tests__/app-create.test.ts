@@ -2,6 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 import { Deta } from 'deta';
 import request from 'supertest';
 import { app } from '../src/app';
+import { postToApi } from './utils/utils';
 
 // TODO: Replace by a fake solution to have faster tests
 
@@ -16,7 +17,8 @@ describe('POST / test suite', () => {
 
 function shouldSucceedCreatingArtistWithRequiredFields() {
   return it('should create a new artist with required fields', async () => {
-    const response = await requestToApi(
+    const response = await postToApi(
+      app,
       '/',
       {
         name: 'Mr. Miyagi',
@@ -37,7 +39,8 @@ function shouldSucceedCreatingArtistWithRequiredFields() {
 
 function shouldSucceedCreatingArtistWithAllFields() {
   return it('should create a new artist with all fields', async () => {
-    const response = await requestToApi(
+    const response = await postToApi(
+      app,
       '/',
       {
         name: 'Mr. Miyagi',
@@ -61,7 +64,8 @@ function shouldSucceedCreatingArtistWithAllFields() {
 
 function shouldFailCreatingArtistWithBadRequestWhenNameIsMissing() {
   return it('should return 400 when name is missing', async () => {
-    const response = await requestToApi(
+    const response = await postToApi(
+      app,
       '/',
       {
         bio: 'Bio...',
@@ -75,15 +79,6 @@ function shouldFailCreatingArtistWithBadRequestWhenNameIsMissing() {
       stack: expect.any(Object),
     });
   });
-}
-
-function requestToApi(endpoint, body, status) {
-  return request(app)
-    .post(endpoint)
-    .send(body)
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(status);
 }
 
 async function clean(id: string) {

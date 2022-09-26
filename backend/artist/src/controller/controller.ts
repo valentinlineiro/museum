@@ -8,7 +8,7 @@ const listService: ListService = container.resolve(ListService);
 
 export const controller = express.Router();
 
-controller.get('/', async (req, res, next) => {
+controller.post('/search', async (req, res, next) => {
   try {
     res.json(await listService.execute());
   } catch (err) {
