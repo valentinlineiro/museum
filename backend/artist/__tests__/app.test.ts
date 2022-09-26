@@ -3,6 +3,8 @@ import { Deta } from 'deta';
 import request from 'supertest';
 import { app } from '../src/app';
 
+// TODO: Replace by a fake solution to have faster tests
+
 const deta = Deta(process.env.PROJECT_KEY);
 const db = deta.Base(process.env.TEST_DB_NAME as string);
 

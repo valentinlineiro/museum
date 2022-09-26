@@ -1,14 +1,13 @@
 import express from 'express';
 import { container } from 'tsyringe';
-import { CreateService } from './service/create';
-
-export const router = express.Router();
+import { CreateService } from '../service/create';
 
 const createService: CreateService = container.resolve(CreateService);
 
-router.get('/', async (req, res) => res.send('Hello World!'));
+export const controller = express.Router();
 
-router.post('/', async (req, res, next) => {
+controller.get('/', async (req, res) => res.send('Hello World!'));
+controller.post('/', async (req, res, next) => {
   try {
     res.status(201).json(await createService.execute(req.body));
   } catch (err) {
