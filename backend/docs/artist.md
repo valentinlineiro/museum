@@ -3,4 +3,4 @@
 The artist micro endpoints are:
 
 - POST /
-- GET /
+- POST /search
