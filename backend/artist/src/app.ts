@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import 'dotenv/config';
 import express, { Application } from 'express';
 import { errorHandler } from './errors';
 import { router } from './routes';

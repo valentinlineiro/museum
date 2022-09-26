@@ -1,17 +1,16 @@
 import express from 'express';
-import { v4 as uuid } from 'uuid';
-import { ApiError } from './errors';
-import { CreateUseCase } from './use-case/create';
+import { container } from 'tsyringe';
+import { CreateService } from './service/create';
 
 export const router = express.Router();
 
-const createUseCase: CreateUseCase = new CreateUseCase();
+const createService: CreateService = container.resolve(CreateService);
 
 router.get('/', async (req, res) => res.send('Hello World!'));
 
 router.post('/', async (req, res, next) => {
   try {
-    res.status(201).json(createUseCase.execute(req.body));
+    res.status(201).json(await createService.execute(req.body));
   } catch (err) {
     next(err);
   }

@@ -1,6 +1,10 @@
 import { describe, expect, it } from '@jest/globals';
+import { Deta } from 'deta';
 import request from 'supertest';
 import { app } from '../src/app';
+
+const deta = Deta(process.env.PROJECT_KEY);
+const db = deta.Base(process.env.TEST_DB_NAME as string);
 
 describe('POST / test suite', () => {
   shouldSucceedCreatingArtistWithRequiredFields(),
@@ -17,12 +21,14 @@ function shouldSucceedCreatingArtistWithRequiredFields() {
       },
       201
     );
-
     expect(response.body).toEqual({
       id: expect.any(String),
-      name: 'Mr. Miyagi',
-      tags: [],
+      resource: {
+        name: 'Mr. Miyagi',
+        tags: [],
+      },
     });
+    await clean(response.body.id);
   });
 }
 
@@ -38,13 +44,15 @@ function shouldSucceedCreatingArtistWithAllFields() {
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(201);
-
     expect(response.body).toEqual({
       id: expect.any(String),
-      name: 'Mr. Miyagi',
-      bio: 'Mr. Miyagi is a complex artist',
-      tags: ['japanese', 'old'],
+      resource: {
+        name: 'Mr. Miyagi',
+        bio: 'Mr. Miyagi is a complex artist',
+        tags: ['japanese', 'old'],
+      },
     });
+    await clean(response.body.id);
   });
 }
 
@@ -58,7 +66,6 @@ function shouldFailCreatingArtistWithBadRequestWhenNameIsMissing() {
       },
       400
     );
-
     expect(response.body).toEqual({
       status: 400,
       message: 'Missing mandatory field name',
@@ -74,4 +81,8 @@ function requestToApi(endpoint, body, status) {
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(status);
+}
+
+async function clean(id: string) {
+  await db.delete(id);
 }
