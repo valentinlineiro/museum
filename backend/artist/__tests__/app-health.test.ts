@@ -4,21 +4,19 @@ import request from 'supertest';
 
 const app = createTestApp();
 
-describe('POST /search test suite', () => {
-  shouldFindNoArtists();
+describe('GET / test suite', () => {
+  shouldReturnUp();
 });
 
-function shouldFindNoArtists() {
-  return it('should find no artists', async () => {
+function shouldReturnUp() {
+  return it('should return up', async () => {
     const response = await request(app)
-      .post('/search')
-      .send({ search: '', filters: [], count: 10 })
+      .get('/')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toEqual({
-      items: [],
-      count: 0,
+      status: 'UP',
     });
   });
 }

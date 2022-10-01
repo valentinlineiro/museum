@@ -1,24 +1,14 @@
 import { Artist } from '../model/artist';
 import { Resource } from '../model/resource';
-import { injectable, inject } from 'tsyringe';
 import { v4 as uuid } from 'uuid';
 import { Base, Deta } from 'deta';
+import { Database } from '../config/database/database';
 
-@injectable()
 export class CreateRepository {
-  private db;
-
-  constructor() {
-    if (process.env.PROJECT_KEY && process.env.TEST_DB_NAME) {
-      const deta = Deta(process.env.PROJECT_KEY);
-      this.db = deta.Base(process.env.TEST_DB_NAME);
-    } else {
-      this.db = Base('artist');
-    }
-  }
+  constructor(private readonly database: Database) {}
 
   async create(artist: Artist): Promise<Resource<Artist>> {
-    const createdArtist = await this.db.put({
+    const createdArtist = await this.database.put({
       key: uuid(),
       name: artist.name,
       bio: artist.bio,
